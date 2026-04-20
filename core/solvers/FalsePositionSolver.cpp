@@ -40,7 +40,7 @@ SolverResult FalsePositionSolver::solve(const SolverConfig &config) const {
             throw MathError("Division by zero encountered in False Position.");
         }
 
-        const double xr = b - (fb * (a - b) / denominator);
+        const double xr = b - (fb * (b - a) / denominator);
         const double fxr = function(xr);
         const double error = hasPrevious
             ? relativeApproxErrorPercent(xr, previousXr)
