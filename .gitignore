@@ -1,0 +1,14 @@
+build/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.out
+*.user
+*.autosave
+ CMakeLists.txt.user
+.qt/
+*.pro.user
