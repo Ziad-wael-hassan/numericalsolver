@@ -1,5 +1,8 @@
 #include "MainWindow.h"
 
+#include <QApplication>
+#include <QPalette>
+#include <QStyleFactory>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMessageBox>
@@ -21,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     , watcher_(new QFutureWatcher<SolverResult>(this)) {
     setWindowTitle("Numerical Solver");
     resize(1000, 700);
+
+    applyDarkMode();
 
     auto *central = new QWidget(this);
     auto *rootLayout = new QVBoxLayout(central);
@@ -64,6 +69,22 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::onSolveFinished);
 
     handleMethodSelected(MethodId::Bisection);
+}
+
+void MainWindow::applyDarkMode() {
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
+
+    QPalette palette;
+    palette.setColor(QPalette::Window, QColor("#1e1e1e"));
+    palette.setColor(QPalette::WindowText, QColor("#e0e0e0"));
+    palette.setColor(QPalette::Base, QColor("#2d2d2d"));
+    palette.setColor(QPalette::AlternateBase, QColor("#3d3d3d"));
+    palette.setColor(QPalette::Text, QColor("#e0e0e0"));
+    palette.setColor(QPalette::Button, QColor("#3d3d3d"));
+    palette.setColor(QPalette::ButtonText, QColor("#e0e0e0"));
+    palette.setColor(QPalette::Highlight, QColor("#0078d4"));
+    palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
+    qApp->setPalette(palette);
 }
 
 void MainWindow::handleMethodSelected(MethodId methodId) {

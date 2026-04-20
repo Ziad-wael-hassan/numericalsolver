@@ -27,6 +27,7 @@ private:
     void clearCurrentInputs();
     void loadCurrentExample();
     void updateStatus(const QString &state);
+    void applyDarkMode();
 
     MethodId currentMethod_ {MethodId::Bisection};
 
