@@ -4,6 +4,7 @@
 
 #include "../core/solvers/BisectionSolver.h"
 #include "../core/solvers/ConjugateGradientSolver.h"
+#include "../core/solvers/FalsePositionSolver.h"
 #include "../core/solvers/GaussianSolver.h"
 #include "../core/solvers/GoldenSectionSolver.h"
 
@@ -30,6 +31,17 @@ int main() {
     rootConfig.maxIterations = 100;
     const auto rootResult = bisection.solve(rootConfig);
     expectNear(rootResult.scalarResult, 1.5213797, 1e-3, "Bisection");
+
+    FalsePositionSolver falsePosition;
+    SolverConfig falsePositionConfig;
+    falsePositionConfig.methodId = MethodId::FalsePosition;
+    falsePositionConfig.functionExpression = "x^2 - 3";
+    falsePositionConfig.intervalStart = 1.0;
+    falsePositionConfig.intervalEnd = 2.0;
+    falsePositionConfig.tolerance = 1e-6;
+    falsePositionConfig.maxIterations = 100;
+    const auto falsePositionResult = falsePosition.solve(falsePositionConfig);
+    expectNear(falsePositionResult.scalarResult, 1.7320508, 1e-3, "False Position");
 
     GaussianSolver gaussian;
     SolverConfig linearConfig;
