@@ -156,6 +156,23 @@ void OutputWidget::displayResult(const SolverResult &result) {
             ++rowIndex;
         }
     }
+
+    // Fix duplication of "Iter" / "Step" column by moving it to vertical header
+    if (iterationTable_->columnCount() > 0) {
+        QTableWidgetItem *headerItem = iterationTable_->horizontalHeaderItem(0);
+        if (headerItem) {
+            QString headerText = headerItem->text().toLower();
+            if (headerText == "iter" || headerText == "step") {
+                QStringList labels;
+                for (int i = 0; i < iterationTable_->rowCount(); ++i) {
+                    QTableWidgetItem *item = iterationTable_->item(i, 0);
+                    labels << (item ? item->text() : QString::number(i + 1));
+                }
+                iterationTable_->setVerticalHeaderLabels(labels);
+                iterationTable_->removeColumn(0);
+            }
+        }
+    }
 }
 
 void OutputWidget::showContextMenu(const QPoint &position) {
