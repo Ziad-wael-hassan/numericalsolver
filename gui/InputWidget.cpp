@@ -1,5 +1,3 @@
-#include "InputWidget.h"
-
 #include <QCheckBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
@@ -7,7 +5,7 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QVBoxLayout>
-
+#include "InputWidget.h"
 #include "widgets/ExpressionEditor.h"
 #include "widgets/MatrixInputWidget.h"
 
@@ -222,25 +220,6 @@ void InputWidget::loadExample() {
             {8.0, -11.0, -3.0});
         infoLabel_->setText("Cramer's Rule: Practical only for small systems (n <= 3).");
         break;
-    case MethodId::GoldenSection:
-        functionEdit_->setTextValue("x^2 - 4*x + 4");
-        intervalStartSpin_->setValue(0.0);
-        intervalEndSpin_->setValue(4.0);
-        maximizeCheck_->setChecked(false);
-        infoLabel_->setText("Golden-Section: Assumes unimodal function on interval.");
-        break;
-    case MethodId::ConjugateGradient:
-        matrixSizeSpin_->setValue(2);
-        matrixWidget_->setSystem(
-            {{4.0, 1.0},
-             {1.0, 3.0}},
-            {1.0, 2.0});
-        rebuildInitialGuessInputs(2);
-        for (auto *input : initialVectorInputs_) {
-            input->setValue(0.0);
-        }
-        infoLabel_->setText("Conjugate Gradient: Requires symmetric positive-definite matrix.");
-        break;
     }
 }
 
@@ -262,11 +241,9 @@ void InputWidget::clearInputs() {
 void InputWidget::updateVisibility() {
     const bool isRootFinding = categoryFor(methodId_) == MethodCategory::RootFinding;
     const bool isLinearSystem = categoryFor(methodId_) == MethodCategory::LinearSystem;
-    const bool isOptimization = categoryFor(methodId_) == MethodCategory::Optimization;
-    const bool isGoldenSection = methodId_ == MethodId::GoldenSection;
 
-    functionLabel_->setVisible(isRootFinding || isGoldenSection);
-    functionEdit_->setVisible(isRootFinding || isGoldenSection);
+    functionLabel_->setVisible(isRootFinding);
+    functionEdit_->setVisible(isRootFinding);
     derivativeLabel_->setVisible(isRootFinding && methodId_ == MethodId::NewtonRaphson);
     derivativeEdit_->setVisible(isRootFinding && methodId_ == MethodId::NewtonRaphson);
     fixedPointLabel_->setVisible(isRootFinding && methodId_ == MethodId::FixedPoint);
@@ -290,20 +267,15 @@ void InputWidget::updateVisibility() {
     maxIterationsSpin_->setVisible(true);
     showIterationsCheck_->setVisible(isRootFinding);
 
-    matrixSizeLabel_->setVisible(isLinearSystem || (isOptimization && !isGoldenSection));
-    matrixSizeSpin_->setVisible(isLinearSystem || (isOptimization && !isGoldenSection));
-    matrixLabel_->setVisible(isLinearSystem || (isOptimization && !isGoldenSection));
-    matrixWidget_->setVisible(isLinearSystem || (isOptimization && !isGoldenSection));
+    matrixSizeLabel_->setVisible(isLinearSystem);
+    matrixSizeSpin_->setVisible(isLinearSystem);
+    matrixLabel_->setVisible(isLinearSystem);
+    matrixWidget_->setVisible(isLinearSystem);
 
-    const bool usesInitialVector = isOptimization && !isGoldenSection;
-    initialVectorLabel_->setVisible(usesInitialVector);
-    initialVectorWidget_->setVisible(usesInitialVector);
+    initialVectorLabel_->setVisible(false);
+    initialVectorWidget_->setVisible(false);
 
-    maximizeCheck_->setVisible(isGoldenSection);
-
-    if (isOptimization) {
-        rebuildInitialGuessInputs(matrixSizeSpin_->value());
-    }
+    maximizeCheck_->setVisible(false);
 }
 
 } // namespace numerical

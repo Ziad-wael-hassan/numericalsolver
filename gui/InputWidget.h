@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <QWidget>
 
 #include "../core/SolverResult.h"

@@ -18,14 +18,11 @@ enum class MethodId {
     PALUFactorization,
     GaussJordan,
     Cramer,
-    GoldenSection,
-    ConjugateGradient,
 };
 
 enum class MethodCategory {
     RootFinding,
     LinearSystem,
-    Optimization,
 };
 
 inline MethodCategory categoryFor(MethodId methodId) {
@@ -42,9 +39,6 @@ inline MethodCategory categoryFor(MethodId methodId) {
     case MethodId::GaussJordan:
     case MethodId::Cramer:
         return MethodCategory::LinearSystem;
-    case MethodId::GoldenSection:
-    case MethodId::ConjugateGradient:
-        return MethodCategory::Optimization;
     }
     return MethodCategory::RootFinding;
 }
@@ -71,10 +65,6 @@ inline std::string toDisplayName(MethodId methodId) {
         return "Gauss-Jordan Elimination";
     case MethodId::Cramer:
         return "Cramer's Rule";
-    case MethodId::GoldenSection:
-        return "Golden-Section Search";
-    case MethodId::ConjugateGradient:
-        return "Conjugate Gradient Method";
     }
     return "Unknown Method";
 }

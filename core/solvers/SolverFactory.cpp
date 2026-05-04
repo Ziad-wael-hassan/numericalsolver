@@ -3,13 +3,11 @@
 #include <memory>
 
 #include "BisectionSolver.h"
-#include "ConjugateGradientSolver.h"
 #include "CramerSolver.h"
 #include "FalsePositionSolver.h"
 #include "FixedPointSolver.h"
 #include "GaussJordanSolver.h"
 #include "GaussianSolver.h"
-#include "GoldenSectionSolver.h"
 #include "LUSolver.h"
 #include "NewtonRaphsonSolver.h"
 #include "PALUSolver.h"
@@ -39,10 +37,6 @@ std::unique_ptr<ISolver> SolverFactory::create(MethodId methodId) {
         return std::make_unique<GaussJordanSolver>();
     case MethodId::Cramer:
         return std::make_unique<CramerSolver>();
-    case MethodId::GoldenSection:
-        return std::make_unique<GoldenSectionSolver>();
-    case MethodId::ConjugateGradient:
-        return std::make_unique<ConjugateGradientSolver>();
     }
     return std::make_unique<BisectionSolver>();
 }

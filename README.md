@@ -6,7 +6,6 @@ Qt-based desktop application for numerical analysis methods from the `plan.md` s
 
 - Chapter 1 root-finding methods: Bisection, False Position, Newton-Raphson, Fixed-Point Iteration, Secant
 - Chapter 2 linear-system methods: Gaussian Elimination, LU, PA=LU, Gauss-Jordan, Cramer's Rule
-- Chapter 3 optimization methods: Golden-Section Search, Conjugate Gradient
 - Handwritten expression tokenizer/parser/evaluator with whitelisted syntax
 - Qt widgets for method selection, method-specific input panels, solution summary, iteration table export, and graph area
 - Dark-mode toggle with `QSettings` persistence
@@ -23,9 +22,9 @@ Prerequisites:
 Build commands:
 
 ```bash
-cmake -S NumericalSolver -B NumericalSolver/build
-cmake --build NumericalSolver/build
-./NumericalSolver/build/NumericalSolver
+cmake -S . -B build
+cmake --build build
+./build/NumericalSolver
 ```
 
 ## Project Layout

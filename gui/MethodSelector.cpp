@@ -48,11 +48,6 @@ void MethodSelector::populate() {
     makeLeaf(chapter2, "Gauss-Jordan Elimination", MethodId::GaussJordan);
     makeLeaf(chapter2, "Cramer's Rule", MethodId::Cramer);
 
-    auto *chapter3 = new QTreeWidgetItem(this, {"Chapter 3: Optimization"});
-    chapter3->setFlags(chapter3->flags() & ~Qt::ItemIsSelectable);
-    makeLeaf(chapter3, "Golden-Section Search", MethodId::GoldenSection);
-    makeLeaf(chapter3, "Conjugate Gradient Method", MethodId::ConjugateGradient);
-
     expandAll();
     selectMethod(MethodId::Bisection);
 }
